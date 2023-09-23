@@ -11,9 +11,10 @@ export const getTrendFilmsOnDay = async signal => {
   return data;
 };
 
-export const searchMovies = async name => {
+export const searchMovies = async (name, signal) => {
   const { data } = await axios.get(
-    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${name}`
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${name}`,
+    { signal: signal }
   );
   return data;
 };
@@ -25,9 +26,10 @@ export const getReviews = async id => {
   return data;
 };
 
-export const getMovieDetails = async id => {
+export const getMovieDetails = async (id, signal) => {
   const { data } = await axios.get(
-    `${BASE_URL}/movie/${id}?api_key=${API_KEY}`
+    `${BASE_URL}/movie/${id}?api_key=${API_KEY}`,
+    { signal: signal }
   );
   return data;
 };

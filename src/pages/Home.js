@@ -1,12 +1,12 @@
 import { getTrendFilmsOnDay } from 'api';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function Home() {
   const [films, setFilms] = useState([]);
-  const [page, setPage] = useState(1);
+  const location = useLocation();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -25,7 +25,7 @@ export default function Home() {
       }
     };
 
-    getTrendFilms(controller);
+    getTrendFilms();
 
     return () => {
       controller.abort();
@@ -38,7 +38,9 @@ export default function Home() {
       <ul films={films}>
         {films.map(({ title, id }) => (
           <li key={id}>
-            <Link to="/movies/:movieId">{title}</Link>
+            <Link to={`/movies/${id}`} state={{ from: location }}>
+              {title}
+            </Link>
           </li>
         ))}
       </ul>
