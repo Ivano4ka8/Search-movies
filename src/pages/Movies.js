@@ -25,8 +25,10 @@ export default function Movies() {
       controllerRef.current = new AbortController();
 
       try {
-        const { page, results, total_pages, total_results } =
-          await searchMovies(nameOfFilm, controllerRef.current.signal);
+        const { results } = await searchMovies(
+          nameOfFilm,
+          controllerRef.current.signal
+        );
 
         setFilms(results);
       } catch (error) {

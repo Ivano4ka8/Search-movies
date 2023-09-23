@@ -14,8 +14,7 @@ export default function Home() {
 
     const getTrendFilms = async () => {
       try {
-        const { page, results, total_pages, total_results } =
-          await getTrendFilmsOnDay(signal);
+        const { results } = await getTrendFilmsOnDay(signal);
 
         setFilms(results);
       } catch (error) {
