@@ -16,7 +16,6 @@ import { Link } from 'react-router-dom';
 import { useRef } from 'react';
 import { UseMovieDetails } from 'hooks/UseMovieDetails';
 import 'react-toastify/dist/ReactToastify.css';
-import { motion } from 'framer-motion';
 
 export default function MovieDetails() {
   const {
