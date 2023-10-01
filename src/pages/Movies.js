@@ -1,84 +1,33 @@
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
-import { searchMovies } from 'api';
-import toast, { Toaster } from 'react-hot-toast';
-import { SearchBox } from 'components/SearchBox';
+import { SearchBox } from 'components/SearchMovies/SearchBox';
+import { Container, Section } from 'components/App/App.styled';
+import { UseSearchFilm } from 'hooks/UseSearchName';
+import { ToastContainer } from 'react-toastify';
+import { SearchMovieList } from 'components/SearchMovies/SearchMovieList';
+import { NoFilms, NoNameFilm } from 'components/Notifications/Notification';
+import { motion } from 'framer-motion';
 
 export default function Movies() {
-  const [films, setFilms] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const nameOfFilm = searchParams.get('query') ?? '';
-
-  const location = useLocation();
-
-  const controllerRef = useRef();
-
-  useEffect(() => {
-    if (!nameOfFilm) {
-      return;
-    }
-    const searchFilms = async nameOfFilm => {
-      if (controllerRef.current) {
-        controllerRef.current.abort();
-      }
-
-      controllerRef.current = new AbortController();
-
-      try {
-        const { results } = await searchMovies(
-          nameOfFilm,
-          controllerRef.current.signal
-        );
-
-        setFilms(results);
-      } catch (error) {
-        if (error.code !== 'ERR_CANCELED') {
-          toast.error('Something went wrong');
-        }
-      }
-    };
-
-    searchFilms(nameOfFilm);
-
-    return () => {
-      controllerRef.current.abort();
-    };
-  }, [nameOfFilm]);
-
-  const updateQueryString = nameOfFilm => {
-    console.log(nameOfFilm);
-    const nextParams = nameOfFilm !== '' ? { query: nameOfFilm } : {};
-    setSearchParams(nextParams);
-  };
-
+  const { nameOfFilm, updateQueryString, films } = UseSearchFilm();
   return (
-    <div>
-      <SearchBox
-        value={nameOfFilm}
-        onChange={event => updateQueryString(event)}
-      />
-
-      <ul films={films}>
-        {films.map(({ title, id }) => (
-          <li key={id}>
-            <Link to={`/movies/${id}`} state={{ from: location }}>
-              {title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <Toaster
-        position="top-center"
-        reverseOrder={true}
-        gutter={8}
-        toastOptions={{
-          duration: 5000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-        }}
-      />
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, width: '100%' }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5, ease: 'easeIn' }}
+    >
+      <main>
+        <Section>
+          <Container>
+            <SearchBox
+              value={nameOfFilm}
+              onChange={event => updateQueryString(event)}
+            />
+            {films.length === 0 && nameOfFilm && <NoFilms />}
+            {nameOfFilm ? <SearchMovieList films={films} /> : <NoNameFilm />}
+          </Container>
+        </Section>
+        <ToastContainer />
+      </main>
+    </motion.div>
   );
 }

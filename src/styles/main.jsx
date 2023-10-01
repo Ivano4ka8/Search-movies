@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   body {
+    color:${props => props.theme.colors.dark};
     background: ${props => props.theme.colors.mainBackground};
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
@@ -19,6 +20,7 @@ export const GlobalStyles = createGlobalStyle`
   h6,
   p {
     margin-top: 0;
+    margin-bottom: 0;
   }
 
   ul,
@@ -46,6 +48,7 @@ export const GlobalStyles = createGlobalStyle`
     display: block;
     max-width: 100%;
     height: auto;
+    object-fit: cover;
   }
 
   code {

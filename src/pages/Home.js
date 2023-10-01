@@ -1,60 +1,40 @@
-import { getTrendFilmsOnDay } from 'api';
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-
-import toast, { Toaster } from 'react-hot-toast';
+import { TrendList } from 'components/Home/TrendList';
+import { Container, Heading, Section } from 'components/App/App.styled';
+import { Loader } from 'components/Loader/Loader';
+import { FaArrowUp } from 'react-icons/fa';
+import { theme } from 'styles';
+import { useSearchTrends } from 'hooks/UseSearchTrends';
+import { ToastContainer, toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 export default function Home() {
-  const [films, setFilms] = useState([]);
-  const location = useLocation();
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const getTrendFilms = async () => {
-      try {
-        const { results } = await getTrendFilmsOnDay(signal);
-
-        setFilms(results);
-      } catch (error) {
-        if (error.code !== 'ERR_CANCELED') {
-          toast.error('Something went wrong');
-        }
-      }
-    };
-
-    getTrendFilms();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
+  const { films, error, isLoading } = useSearchTrends();
 
   return (
-    <div>
-      <h1>Trending today</h1>
-      <ul films={films}>
-        {films.map(({ title, id }) => (
-          <li key={id}>
-            <Link to={`/movies/${id}`} state={{ from: location }}>
-              {title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <Toaster
-        position="top-center"
-        reverseOrder={true}
-        gutter={8}
-        toastOptions={{
-          duration: 5000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-        }}
-      />
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5, ease: 'easeIn' }}
+    >
+      <main>
+        {isLoading && <Loader />}
+        {error && toast.error('Something went wrong')}
+        <Section>
+          <Container>
+            <Heading>
+              <FaArrowUp color={theme.colors.accent} size="24px" />
+              Movie trends
+            </Heading>
+            <TrendList films={films} />
+          </Container>
+        </Section>
+        <ToastContainer
+          pauseOnFocusLoss={true}
+          enableMultiContainer={true}
+          limit={1}
+        />
+      </main>
+    </motion.div>
   );
 }
