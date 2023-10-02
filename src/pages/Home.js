@@ -1,4 +1,4 @@
-import { TrendList } from 'components/Home/TrendList';
+import { MovieList } from 'components/SearchMovies/MovieList';
 import { Container, Heading, Section } from 'components/App/App.styled';
 import { Loader } from 'components/Loader/Loader';
 import { FaArrowUp } from 'react-icons/fa';
@@ -26,7 +26,7 @@ export default function Home() {
               <FaArrowUp color={theme.colors.accent} size="24px" />
               Movie trends
             </Heading>
-            <TrendList films={films} />
+            {films.length > 0 && <MovieList films={films} />}
           </Container>
         </Section>
         <ToastContainer

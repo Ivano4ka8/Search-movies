@@ -1,6 +1,6 @@
 import { UseCastInfo } from 'hooks/UseCastInfo';
 import { Container, Heading, Section } from 'components/App/App.styled';
-import { CastListEl } from './CastList';
+import { CastListEl } from '../components/Cast/CastList';
 import { toast } from 'react-toastify';
 import { Loader } from 'components/Loader/Loader';
 import { motion } from 'framer-motion';

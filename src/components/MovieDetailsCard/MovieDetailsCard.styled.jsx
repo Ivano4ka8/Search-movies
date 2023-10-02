@@ -29,6 +29,7 @@ export const MovieWrapper = styled.div`
 
 export const BackBtn = styled.button`
   padding: 5px 10px;
+  margin-bottom: 15px;
   border-radius: 4px;
   background-color: ${theme.colors.accent};
   font-size: ${theme.fontSizes.medium};

@@ -1,6 +1,6 @@
 import { ToastContainer, toast } from 'react-toastify';
-import { Loader } from '../Loader/Loader';
-import { ReviewsList } from './ReviewsList';
+import { Loader } from '../components/Loader/Loader';
+import { ReviewsList } from '../components/Reviews/ReviewsList';
 import { UseReview } from 'hooks/UseReviewsInfo';
 import { Container, Section } from 'components/App/App.styled';
 import { NoReviews } from 'components/Notifications/Notification';

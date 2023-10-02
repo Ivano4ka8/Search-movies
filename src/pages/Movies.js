@@ -1,13 +1,15 @@
 import { SearchBox } from 'components/SearchMovies/SearchBox';
 import { Container, Section } from 'components/App/App.styled';
 import { UseSearchFilm } from 'hooks/UseSearchName';
-import { ToastContainer } from 'react-toastify';
-import { SearchMovieList } from 'components/SearchMovies/SearchMovieList';
+import { ToastContainer, toast } from 'react-toastify';
+import { MovieList } from '../components/SearchMovies/MovieList';
 import { NoFilms, NoNameFilm } from 'components/Notifications/Notification';
 import { motion } from 'framer-motion';
+import { Loader } from 'components/Loader/Loader';
 
 export default function Movies() {
-  const { nameOfFilm, updateQueryString, films } = UseSearchFilm();
+  const { nameOfFilm, updateQueryString, films, error, isLoading } =
+    UseSearchFilm();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -18,12 +20,11 @@ export default function Movies() {
       <main>
         <Section>
           <Container>
-            <SearchBox
-              value={nameOfFilm}
-              onChange={event => updateQueryString(event)}
-            />
+            {isLoading && <Loader />}
+            {error && toast.error('Something went wront')}
+            <SearchBox value={nameOfFilm} onChange={updateQueryString} />
             {films.length === 0 && nameOfFilm && <NoFilms />}
-            {nameOfFilm ? <SearchMovieList films={films} /> : <NoNameFilm />}
+            {films.length > 0 ? <MovieList films={films} /> : <NoNameFilm />}
           </Container>
         </Section>
         <ToastContainer />

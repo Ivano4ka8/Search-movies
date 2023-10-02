@@ -1,14 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { searchMovies } from 'api';
-import { toast } from 'react-toastify';
 
 export const UseSearchFilm = () => {
   const [films, setFilms] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const nameOfFilm = searchParams.get('query') ?? '';
-
-  const location = useLocation();
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const controllerRef = useRef();
 
@@ -16,6 +15,9 @@ export const UseSearchFilm = () => {
     if (!nameOfFilm) {
       return;
     }
+
+    setIsLoading(true);
+
     const searchFilms = async nameOfFilm => {
       if (controllerRef.current) {
         controllerRef.current.abort();
@@ -32,8 +34,10 @@ export const UseSearchFilm = () => {
         setFilms(results);
       } catch (error) {
         if (error.code !== 'ERR_CANCELED') {
-          toast.error('Something went wront');
+          setError(true);
         }
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -42,12 +46,12 @@ export const UseSearchFilm = () => {
     return () => {
       controllerRef.current.abort();
     };
-  }, [nameOfFilm, films]);
+  }, [nameOfFilm]);
 
-  const updateQueryString = nameOfFilm => {
-    const nextParams = nameOfFilm !== '' ? { query: nameOfFilm } : {};
+  const updateQueryString = value => {
+    const nextParams = value !== '' ? { query: value } : {};
     setSearchParams(nextParams);
   };
 
-  return { nameOfFilm, updateQueryString, films, location };
+  return { nameOfFilm, updateQueryString, films, error, isLoading };
 };
