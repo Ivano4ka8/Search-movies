@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Header } from 'components/Header/Header';
 import { lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
@@ -11,11 +11,10 @@ const Reviews = lazy(() => import('../../pages/Reviews'));
 const NotFound = lazy(() => import('../../pages/NotFound'));
 
 export const App = () => {
-  const location = useLocation();
   return (
     <div>
       <AnimatePresence>
-        <Routes location={location} key={location.pathname}>
+        <Routes>
           <Route path="/" element={<Header />}>
             <Route index element={<Home />}></Route>
             <Route path="/movies" element={<Movies />}></Route>

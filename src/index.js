@@ -5,7 +5,6 @@ import 'modern-normalize';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles, theme } from 'styles';
 import { BrowserRouter } from 'react-router-dom';
-import { getTrendFilmsOnDay } from 'api';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -17,4 +16,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </React.StrictMode>
 );
-getTrendFilmsOnDay();
