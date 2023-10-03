@@ -3,9 +3,9 @@ import axios from 'axios';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = '1af137eef8f116a60d13f93df04b300d';
 
-export const getTrendFilmsOnDay = async signal => {
+export const getTrendFilmsOnDay = async (param, signal) => {
   const { data } = await axios.get(
-    `${BASE_URL}/trending/movie/day?api_key=${API_KEY}`,
+    `${BASE_URL}/trending/movie/${param}?api_key=${API_KEY}`,
     { signal: signal }
   );
   return data;

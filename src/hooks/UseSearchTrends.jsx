@@ -13,7 +13,7 @@ export const useSearchTrends = () => {
 
     const getTrendFilms = async () => {
       try {
-        const { results } = await getTrendFilmsOnDay(signal);
+        const { results } = await getTrendFilmsOnDay('day', signal);
 
         setFilms(results);
       } catch (error) {

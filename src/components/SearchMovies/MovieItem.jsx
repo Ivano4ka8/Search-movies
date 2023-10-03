@@ -1,5 +1,6 @@
 import { MovieImg, MovieItem, LinkStyled } from './MovieItem.styled';
 import { useLocation } from 'react-router-dom';
+import { BsCardImage } from 'react-icons/bs';
 const imgUrl = 'https://image.tmdb.org/t/p/original';
 
 export const MovieItems = ({
@@ -10,7 +11,12 @@ export const MovieItems = ({
   return (
     <MovieItem key={id}>
       <LinkStyled to={`/movies/${id}`} state={{ from: location }}>
-        <MovieImg src={imgUrl + poster} alt={title} />
+        {poster ? (
+          <MovieImg src={imgUrl + poster} alt={title} />
+        ) : (
+          <BsCardImage size="200px" />
+        )}
+
         {title}
       </LinkStyled>
     </MovieItem>

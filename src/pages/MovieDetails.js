@@ -1,6 +1,6 @@
 import { MovieDetailsCard } from 'components/MovieDetailsCard/MovieDetailsCard';
 import { Container, Section } from 'components/App/App.styled';
-import { Suspense } from 'react';
+import { Suspense, useRef } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Loader } from 'components/Loader/Loader';
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,13 +16,13 @@ import {
 export default function MovieId() {
   const { isLoading, error, info } = UseMovieDetails();
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/';
+  const backLinkHref = useRef(location.state?.from ?? '/');
 
   return (
     <main>
       <Section>
         <Container>
-          <Link to={backLinkHref}>
+          <Link to={backLinkHref.current}>
             <BackBtn type="button">Back</BackBtn>
           </Link>
           <MovieWrapper>
