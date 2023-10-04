@@ -17,7 +17,7 @@ export const SearchBox = ({ value, onChange }) => {
   };
   return (
     <SearchWrapper>
-      <form onSubmit={{ handleSubmit }}>
+      <form onSubmit={ handleSubmit}>
         <Input type="text" value={query} name="query" onChange={handleChange} />
         <span>
           <IconSearch size="20px" color={theme.colors.accent} />
