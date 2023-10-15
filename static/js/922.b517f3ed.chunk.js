@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkSearch_movies=self.webpackChunkSearch_movies||[]).push([[922],{8922:function(e,n,r){r.r(n),r.d(n,{default:function(){return i}});var s=r(1087),t=r(1578),c=r(184);function i(){return(0,c.jsxs)("div",{style:{textAlign:"center"},children:[(0,c.jsx)(t.hlP,{size:"80px"}),(0,c.jsx)("p",{children:(0,c.jsx)(s.rU,{to:"/",children:"GO TO HOME "})})]})}}}]);
+//# sourceMappingURL=922.b517f3ed.chunk.js.map
